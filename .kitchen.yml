@@ -85,7 +85,6 @@ suites:
     excludes:
       - fedora-19
       - fedora-20
-      - smartos-base-64-lts-1442
     run_list:
       - recipe[java::default]
   - name: openjdk-7
