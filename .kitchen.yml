@@ -63,12 +63,29 @@ platforms:
   - name: fedora-20
     driver:
       box: opscode-fedora-20
+  - name: smartos_base-64-lts_14.4.2
+    driver:
+      box: livinginthepast/smartos-base64
+      box_url: https://atlas.hashicorp.com/livinginthepast/boxes/smartos-base64
+      vagrantfile_erb: test/templates/Vagrantfile.smartos.erb
+      zone:
+        name: base-64-lts_14.4.2
+        brand: joyent
+        image: b67492c2-055c-11e5-85d8-8b039ac981ec
+    provisioner:
+      require_chef_omnibus: true
+      chef_omnibus_url: https://raw.github.com/wanelo-chef/chef-bootstrap/master/latest.sh
+      attributes:
+        java:
+          jdk_version: 7
+          install_flavor: "smartos"
 
 suites:
   - name: openjdk
     excludes:
       - fedora-19
       - fedora-20
+      - smartos-base-64-lts-1442
     run_list:
       - recipe[java::default]
   - name: openjdk-7
@@ -131,6 +148,8 @@ suites:
   - name: oracle-rpm
     run_list:
       - recipe[java]
+    excludes:
+      - smartos-base-64-lts-1442
     attributes:
       java:
         install_flavor: oracle_rpm
